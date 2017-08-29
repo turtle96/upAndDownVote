@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NameListService } from '../shared/name-list/name-list.service';
+import {HomeService} from './home.service';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -18,11 +18,11 @@ export class HomeComponent implements OnInit {
 
   /**
    * Creates an instance of the HomeComponent with the injected
-   * NameListService.
+   * HomeService.
    *
-   * @param {NameListService} nameListService - The injected NameListService.
+   * @param {HomeService} homeService - The injected HomeService.
    */
-  constructor(public nameListService: NameListService) {}
+  constructor(public homeService: HomeService) {}
 
   /**
    * Get the names OnInit
@@ -32,10 +32,10 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Handle the nameListService observable
+   * Handle the homeService observable
    */
   getNames() {
-    this.nameListService.get()
+    this.homeService.get()
       .subscribe(
         names => this.names = names,
         error => this.errorMessage = <any>error
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
   addName(): boolean {
-    // TODO: implement nameListService.post
+    // TODO: implement homeService.post
     this.names.push(this.newName);
     this.newName = '';
     return false;

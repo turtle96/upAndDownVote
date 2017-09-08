@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
    * Pushes a new name onto the names array
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
-  addName(): boolean {
+  enterUsername(): boolean {
     // this.names.push(this.newName);
     // this.newName = '';
 

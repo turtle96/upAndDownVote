@@ -45,7 +45,7 @@ export function main() {
             expect(nameListServiceSpy.calls.count()).toBe(1);
 
             homeInstance.newName = 'Minko';
-            homeInstance.addName();
+            homeInstance.enterUsername();
 
             fixture.detectChanges();
 

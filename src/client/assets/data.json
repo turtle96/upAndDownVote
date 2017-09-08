@@ -1,6 +1,8 @@
-[
-  "Edsger Dijkstra",
-  "Donald Knuth",
-  "Alan Turing",
-  "Grace Hopper"
-]
+{
+  "Cancer": "20",
+  "Capitalism": "50",
+  "Cars": "50",
+  "Cello": "70",
+  "Chemistry": "300",
+  "Children": "50"
+}

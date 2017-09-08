@@ -5,10 +5,16 @@
   <button type="submit">Submit</button>
 </form>
 
+<p *ngIf="user">Username: {{ user }}</p>
+
 
 <ul>
-  <li *ngFor="let topic of topics">Topic: {{ topic }}, Votes: {{ topicsObj[topic] }}</li>
+  <li *ngFor="let topic of topics">
+    Topic: {{ topic.key }}, Votes: {{ topic.value }}
+    <button>Up</button>
+    <button>Down</button>
+  </li>
 </ul>
 
 
-<p *ngIf="user">Username: {{ user }}</p>
+

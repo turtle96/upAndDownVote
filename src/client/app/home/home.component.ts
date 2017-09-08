@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HomeService} from './home.service';
+import { HomeService } from './home.service';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
   errorMessage: string;
   names: any[] = [];
 
+  private user: string = '';
+
   /**
    * Creates an instance of the HomeComponent with the injected
    * HomeService.
@@ -25,10 +27,10 @@ export class HomeComponent implements OnInit {
   constructor(public homeService: HomeService) {}
 
   /**
-   * Get the names OnInit
+   * OnInit
    */
   ngOnInit() {
-    this.getNames();
+    // this.getNames();
   }
 
   /**
@@ -47,9 +49,11 @@ export class HomeComponent implements OnInit {
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
   addName(): boolean {
-    // TODO: implement homeService.post
-    this.names.push(this.newName);
-    this.newName = '';
+    // this.names.push(this.newName);
+    // this.newName = '';
+
+    this.user = this.newName;
+
     return false;
   }
 

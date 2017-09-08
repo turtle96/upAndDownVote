@@ -1,10 +1,12 @@
-<p>Howdy! Here's a list of awesome computer scientists. Do you know any others? Add to the list yourself.</p>
+<p>Enter user name to vote for a topic.</p>
 
 <form (submit)="addName()">
-  <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
-  <button type="submit">Add</button>
+  <input [(ngModel)]="newName" name="newName" placeholder="Enter name">
+  <button type="submit">Submit</button>
 </form>
 
-<ul>
-  <li *ngFor="let name of names">{{ name }}</li>
-</ul>
+<!--<ul>-->
+  <!--<li *ngFor="let name of names">{{ name }}</li>-->
+<!--</ul>-->
+
+<p *ngIf="user">Username: {{ user }}</p>

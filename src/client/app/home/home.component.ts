@@ -37,6 +37,26 @@ export class HomeComponent implements OnInit {
 
   }
 
+  upVote(topicKey: string) {
+    console.log(topicKey);
+
+    for (let i=0; i<this.topics.length; i++) {
+      if (this.topics[i].key === topicKey) {
+        this.topics[i].value = this.topics[i].value + 1;
+      }
+    }
+  }
+
+  downVote(topicKey: string) {
+    console.log(topicKey);
+
+    for (let i=0; i<this.topics.length; i++) {
+      if (this.topics[i].key === topicKey) {
+        this.topics[i].value = this.topics[i].value - 1;
+      }
+    }
+  }
+
   /**
    * Handle the homeService observable
    */
@@ -49,15 +69,11 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Pushes a new name onto the names array
+   * Enter user name
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
   enterUsername(): boolean {
-    // this.names.push(this.newName);
-    // this.newName = '';
-
     this.user = this.newName;
-
     return false;
   }
 

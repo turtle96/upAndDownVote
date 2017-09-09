@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   errorMessage: string;
 
   topics: any[] = [];
+  newTopic: string;
 
   private user: string = '';
 
@@ -32,6 +33,19 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     this.topics = this.homeService.getInitialTopics();
+  }
+
+  getTopTwentyTopics() {
+    let topicsCopy = this.topics.slice();
+    topicsCopy.sort(this.sortTopicsByAlphabeticalOrder);
+    topicsCopy.sort(this.sortTopicsByVotes);
+    topicsCopy = topicsCopy.slice(0, 20);
+    return topicsCopy;
+  }
+
+  getAllTopics() {
+    let topicsCopy = this.topics.slice();
+    return topicsCopy.sort(this.sortTopicsByAlphabeticalOrder);
   }
 
   sortTopicsByVotes(topic1: any, topic2: any) {
@@ -57,14 +71,17 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Handle the homeService observable
+   * Enter new topic
+   * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
-  getTopics() {
-    // this.homeService.get()
-    //   .subscribe(
-    //     topics => {this.topicsObj = topics; this.topics = Object.keys(this.topicsObj);},
-    //     error => this.errorMessage = <any>error
-    //   );
+  enterNewTopic(): boolean {
+    if (this.newTopic === '') {
+      return false;
+    }
+    let name = this.newTopic;
+    let votes = 0;
+    this.topics.push({name, votes});
+    return false;
   }
 
   /**

@@ -1,22 +1,29 @@
-<p>Enter user name to vote for a topic.</p>
+<p>Enter user name to add a new topic or vote for a topic.</p>
 
 <form (submit)="enterUsername()">
   <input [(ngModel)]="newName" name="newName" placeholder="Enter name">
   <button type="submit">Submit</button>
 </form>
 
+<br>
+
 <p *ngIf="user">Username: {{ user }}</p>
+
+<form *ngIf="user" (submit)="enterNewTopic()">
+  <input [(ngModel)]="newTopic" name="newTopic" placeholder="Add new topic">
+  <button type="submit">Submit</button>
+</form>
 
 <h1>Top 20 Topics</h1>
 <ul>
-  <li *ngFor="let topic of topics.sort(sortTopicsByAlphabeticalOrder).sort(sortTopicsByVotes).slice(0, 20)">
+  <li *ngFor="let topic of getTopTwentyTopics()">
     Topic: {{ topic.name }}, Votes: {{ topic.votes }}
   </li>
 </ul>
 
-<h1>Complete List of Topics</h1>
+<h1>All Topics</h1>
 <ul>
-  <li *ngFor="let topic of topics.sort(sortTopicsByAlphabeticalOrder)">
+  <li *ngFor="let topic of getAllTopics()">
     Topic: {{ topic.name }}, Votes: {{ topic.votes }}
     <button *ngIf="user" (click)="upVote(topic)">Up</button>
     <button *ngIf="user" (click)="downVote(topic)">Down</button>

@@ -44,8 +44,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllTopics() {
-    let topicsCopy = this.topics.slice();
-    return topicsCopy.sort(this.sortTopicsByAlphabeticalOrder);
+    return this.topics.sort(this.sortTopicsByAlphabeticalOrder);
   }
 
   sortTopicsByVotes(topic1: any, topic2: any) {
@@ -75,7 +74,7 @@ export class HomeComponent implements OnInit {
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
   enterNewTopic(): boolean {
-    if (this.newTopic === '') {
+    if (!this.newTopic) {
       return false;
     }
     let name = this.newTopic;

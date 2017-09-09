@@ -9,24 +9,23 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class HomeService {
 
-  private static topics: object[] = [];
+  private topics: object[] = [];
 
   constructor(private http: Http) {
     this.get().subscribe(
       topics => {
-        // HomeService.topics = topics;
         let topicsJson: any = topics;
         for (let name of Object.keys(topicsJson)) {
           let votes: any = parseInt(topicsJson[name]);
-          HomeService.topics.push({name, votes});
+          this.topics.push({name, votes});
         }
-        console.log(HomeService.topics);
+        console.log(this.topics);
         },
     );
   }
 
-  getTopics() {
-    return HomeService.topics;
+  getInitialTopics() {
+    return this.topics;
   }
 
   /**

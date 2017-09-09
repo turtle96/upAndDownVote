@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
   newName: string = '';
   errorMessage: string;
 
-  topicsObj: object;
   topics: any[] = [];
 
   private user: string = '';
@@ -32,8 +31,7 @@ export class HomeComponent implements OnInit {
    * OnInit
    */
   ngOnInit() {
-    // this.getTopics();
-    this.topics = this.homeService.getTopics();
+    this.topics = this.homeService.getInitialTopics();
 
   }
 

@@ -20,19 +20,23 @@
   <li class="collection-item">Topic Rejected (Please ensure field is not empty, and not a duplicate topic)</li>
 </ul>
 
-<h1>Top 20 Topics</h1>
-<ul>
-  <li *ngFor="let topic of getTopTwentyTopics()">
+<h3>Top 20 Topics</h3>
+<ul class="collection" style="padding: 0;">
+  <li *ngFor="let topic of getTopTwentyTopics()" class="collection-item">
     Topic: {{ topic.name }}, Votes: {{ topic.votes }}
   </li>
 </ul>
 
-<h1>All Topics</h1>
-<ul>
-  <li *ngFor="let topic of getAllTopics()">
-    Topic: {{ topic.name }}, Votes: {{ topic.votes }}
-    <button *ngIf="user" (click)="upVote(topic)">Up</button>
-    <button *ngIf="user" (click)="downVote(topic)">Down</button>
+<h3>All Topics</h3>
+<ul class="collection" style="padding: 0;">
+  <li *ngFor="let topic of getAllTopics()" class="collection-item" style="display: flex;">
+    <div style="flex: 1;">Topic: {{ topic.name }}, Votes: {{ topic.votes }}</div>
+
+    <div class="secondary-content">
+      <button *ngIf="user" class="btn" (click)="upVote(topic)">Up</button>
+      <button *ngIf="user" class="btn" (click)="downVote(topic)">Down</button>
+    </div>
+
   </li>
 </ul>
 

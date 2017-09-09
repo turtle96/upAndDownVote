@@ -17,8 +17,8 @@ export class HomeService {
         // HomeService.topics = topics;
         let topicsJson: any = topics;
         for (let name of Object.keys(topicsJson)) {
-          let value: any = parseInt(topicsJson[name]);
-          HomeService.topics.push({name, value});
+          let votes: any = parseInt(topicsJson[name]);
+          HomeService.topics.push({name, votes});
         }
         console.log(HomeService.topics);
         },

@@ -39,14 +39,12 @@ export class HomeComponent implements OnInit {
 
   upVote(topic: any) {
     console.log(topic);
-
-    topic.value = topic.value + 1;
+    topic.votes = topic.votes + 1;
   }
 
   downVote(topic: any) {
     console.log(topic);
-
-    topic.value = topic.value - 1;
+    topic.votes = topic.votes - 1;
   }
 
   /**

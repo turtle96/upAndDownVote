@@ -38,8 +38,8 @@ export class HomeComponent implements OnInit {
   }
 
   getTopTwentyTopics() {
+    this.topics.sort(this.sortTopicsByAlphabeticalOrder);
     let topicsCopy = this.topics.slice();
-    topicsCopy.sort(this.sortTopicsByAlphabeticalOrder);
     topicsCopy.sort(this.sortTopicsByVotes);
     topicsCopy = topicsCopy.slice(0, 20);
     return topicsCopy;

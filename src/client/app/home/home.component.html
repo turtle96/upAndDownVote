@@ -7,12 +7,19 @@
 
 <p *ngIf="user">Username: {{ user }}</p>
 
-
+<h1>Top 20 Topics</h1>
 <ul>
-  <li *ngFor="let topic of topics.sort(sortTopics)">
+  <li *ngFor="let topic of topics.slice(0, 20).sort(sortTopics)">
     Topic: {{ topic.name }}, Votes: {{ topic.votes }}
-    <button (click)="upVote(topic)">Up</button>
-    <button (click)="downVote(topic)">Down</button>
+  </li>
+</ul>
+
+<h1>Complete List of Topics</h1>
+<ul>
+  <li *ngFor="let topic of topics">
+    Topic: {{ topic.name }}, Votes: {{ topic.votes }}
+    <button *ngIf="user" (click)="upVote(topic)">Up</button>
+    <button *ngIf="user" (click)="downVote(topic)">Down</button>
   </li>
 </ul>
 

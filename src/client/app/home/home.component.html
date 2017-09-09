@@ -2,21 +2,23 @@
 
 <form (submit)="enterUsername()">
   <input [(ngModel)]="newName" name="newName" placeholder="Enter name">
-  <button type="submit">Submit</button>
+  <button class="btn" type="submit">Submit</button>
 </form>
 
-<br>
-
-<p *ngIf="user">Username: {{ user }}</p>
+<h5 *ngIf="user">Logged in as: {{ user }}</h5>
 
 <form *ngIf="user" (submit)="enterNewTopic()">
   <input [(ngModel)]="newTopic" name="newTopic" placeholder="Add new topic">
-  <button type="submit">Submit</button>
+  <button class="btn" type="submit">Submit</button>
 </form>
 
-<li *ngIf="topicAccepted">Topic Accepted</li>
+<ul *ngIf="topicAccepted" class="collection green">
+  <li class="collection-item">Topic Accepted</li>
+</ul>
 
-<li *ngIf="topicRejected">Topic Rejected</li>
+<ul *ngIf="topicRejected" class="collection red">
+  <li class="collection-item">Topic Rejected (Please ensure field is not empty, and not a duplicate topic)</li>
+</ul>
 
 <h1>Top 20 Topics</h1>
 <ul>

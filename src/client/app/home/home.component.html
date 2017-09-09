@@ -10,9 +10,9 @@
 
 <ul>
   <li *ngFor="let topic of topics">
-    Topic: {{ topic.key }}, Votes: {{ topic.value }}
-    <button (click)="upVote(topic.key)">Up</button>
-    <button (click)="downVote(topic.key)">Down</button>
+    Topic: {{ topic.name }}, Votes: {{ topic.value }}
+    <button (click)="upVote(topic)">Up</button>
+    <button (click)="downVote(topic)">Down</button>
   </li>
 </ul>
 

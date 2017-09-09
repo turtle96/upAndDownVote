@@ -37,24 +37,16 @@ export class HomeComponent implements OnInit {
 
   }
 
-  upVote(topicKey: string) {
-    console.log(topicKey);
+  upVote(topic: any) {
+    console.log(topic);
 
-    for (let i=0; i<this.topics.length; i++) {
-      if (this.topics[i].key === topicKey) {
-        this.topics[i].value = this.topics[i].value + 1;
-      }
-    }
+    topic.value = topic.value + 1;
   }
 
-  downVote(topicKey: string) {
-    console.log(topicKey);
+  downVote(topic: any) {
+    console.log(topic);
 
-    for (let i=0; i<this.topics.length; i++) {
-      if (this.topics[i].key === topicKey) {
-        this.topics[i].value = this.topics[i].value - 1;
-      }
-    }
+    topic.value = topic.value - 1;
   }
 
   /**

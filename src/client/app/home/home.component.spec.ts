@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 import { HomeComponent } from './home.component';
-import { HomeService } from '../shared/name-list/name-list.service';
+import { HomeService } from './home.service';
 
 export function main() {
   describe('Home component', () => {
@@ -18,13 +18,13 @@ export function main() {
         imports: [FormsModule],
         declarations: [HomeComponent],
         providers: [
-          { provide: HomeService, useValue: new MockNameListService() }
+          { provide: HomeService, useValue: new MockHomeService() }
         ]
       });
 
     });
 
-    it('should work',
+    it('should be able to read topics from data.json, enter username',
       async(() => {
         TestBed
           .compileComponents()
@@ -32,39 +32,52 @@ export function main() {
             let fixture = TestBed.createComponent(HomeComponent);
             let homeInstance = fixture.debugElement.componentInstance;
             let homeDOMEl = fixture.debugElement.nativeElement;
-            let mockNameListService =
-              fixture.debugElement.injector.get<any>(HomeService) as MockNameListService;
-            let nameListServiceSpy = spyOn(mockNameListService, 'get').and.callThrough();
+            let mockHomeService =
+              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+            let homeServiceSpy = spyOn(mockHomeService, 'get').and.callThrough();
 
-            mockNameListService.returnValue = ['1', '2', '3'];
+            mockHomeService.topics = [
+              {name: "Animals", votes: 20, user: "duck_duck"},
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 40, user: "duck_duck"}
+            ];
 
             fixture.detectChanges();
 
-            expect(homeInstance.homeService).toEqual(jasmine.any(MockNameListService));
-            expect(homeDOMEl.querySelectorAll('li').length).toEqual(3);
-            expect(nameListServiceSpy.calls.count()).toBe(1);
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+            expect(homeDOMEl.querySelectorAll('li').length).toEqual(6);
+            // expect(homeServiceSpy.calls.count()).toBe(1);
 
-            homeInstance.newName = 'Minko';
+            homeInstance.newName = 'MapleSyrup';
             homeInstance.enterUsername();
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li').length).toEqual(4);
-            expect(homeDOMEl.querySelectorAll('li')[3].textContent).toEqual('Minko');
+            expect(homeDOMEl.querySelectorAll('h5')[1].textContent).toEqual('Logged in as: MapleSyrup');
+
+            fixture.detectChanges();
+
+            // expect(homeDOMEl.querySelectorAll('li').length).toEqual(4);
+            // expect(homeDOMEl.querySelectorAll('li')[3].textContent).toEqual('Minko');
           });
 
       }));
   });
 }
 
-class MockNameListService {
+class MockHomeService {
 
-  returnValue: string[];
+  returnValue: object;
+  topics: any[];
 
-  get(): Observable<string[]> {
+  get(): Observable<object> {
     return Observable.create((observer: any) => {
       observer.next(this.returnValue);
       observer.complete();
     });
+  }
+
+  getInitialTopics(): any[] {
+    return this.topics;
   }
 }

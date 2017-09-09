@@ -20,7 +20,7 @@ export class HomeService {
           let user: string = 'duck_duck';
           this.topics.push({name, votes, user});
         }
-        console.log(this.topics);
+        // console.log(this.topics);
         },
     );
   }

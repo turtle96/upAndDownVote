@@ -9,7 +9,7 @@
 
 
 <ul>
-  <li *ngFor="let topic of topics">
+  <li *ngFor="let topic of topics.sort(sortTopics)">
     Topic: {{ topic.name }}, Votes: {{ topic.votes }}
     <button (click)="upVote(topic)">Up</button>
     <button (click)="downVote(topic)">Down</button>

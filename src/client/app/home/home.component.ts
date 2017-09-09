@@ -32,7 +32,10 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     this.topics = this.homeService.getInitialTopics();
+  }
 
+  sortTopics(topic1: any, topic2: any) {
+    return topic2.votes - topic1.votes;
   }
 
   upVote(topic: any) {

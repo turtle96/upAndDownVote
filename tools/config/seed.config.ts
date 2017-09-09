@@ -174,7 +174,7 @@ export class SeedConfig {
    * `index.html`.
    * @type {string}
    */
-  APP_TITLE = 'Simulation Log Viewer';
+  APP_TITLE = 'Up And Down Vote';
 
   /**
    * Tracking ID.

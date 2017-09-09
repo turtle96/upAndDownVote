@@ -1,10 +1,51 @@
-<p>Howdy! Here's a list of awesome computer scientists. Do you know any others? Add to the list yourself.</p>
+<h5>Enter user name to add a new topic or vote for a topic. Scroll down to All Topics to vote.</h5>
 
-<form (submit)="addName()">
-  <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
-  <button type="submit">Add</button>
+<br>
+
+<form (submit)="enterUsername()">
+  <input [(ngModel)]="newName" name="newName" placeholder="Enter name">
+  <button class="btn" type="submit">Submit</button>
 </form>
 
-<ul>
-  <li *ngFor="let name of names">{{ name }}</li>
+<h5 *ngIf="user">Logged in as: {{ user }}</h5>
+
+<form *ngIf="user" (submit)="enterNewTopic()">
+  <input [(ngModel)]="newTopic" name="newTopic" placeholder="Add new topic">
+  <button class="btn" type="submit">Submit</button>
+</form>
+
+<ul *ngIf="topicAccepted" class="collection green">
+  <li class="collection-item">Topic Accepted</li>
 </ul>
+
+<ul *ngIf="topicRejected" class="collection red">
+  <li class="collection-item">Topic Rejected (Please ensure field is not empty, and not a duplicate topic)</li>
+</ul>
+
+<h3>Top 20 Topics</h3>
+<ul class="collection" style="padding: 0;">
+  <li *ngFor="let topic of getTopTwentyTopics(); let i = index" class="collection-item">
+    {{ i+1 }}. Topic: {{ topic.name }}, Votes: {{ topic.votes }}, Submitted by: {{ topic.user }}
+  </li>
+</ul>
+
+<h3>All Topics</h3>
+<ul class="collection" style="padding: 0;">
+  <li *ngFor="let topic of getAllTopics()" class="collection-item" style="display: flex;">
+    <div style="flex: 1;">
+      Topic: {{ topic.name }}, Votes: {{ topic.votes }}, Submitted by: {{ topic.user }}
+    </div>
+
+    <div class="secondary-content">
+      <button *ngIf="user" class="btn" (click)="upVote(topic)">Up</button>
+      <button *ngIf="user" class="btn" (click)="downVote(topic)">Down</button>
+    </div>
+
+  </li>
+</ul>
+
+<br>
+<br>
+
+
+

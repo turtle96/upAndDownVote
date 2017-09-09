@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 import { HomeComponent } from './home.component';
-import { NameListService } from '../shared/name-list/name-list.service';
+import { HomeService } from './home.service';
 
 export function main() {
   describe('Home component', () => {
@@ -18,13 +18,13 @@ export function main() {
         imports: [FormsModule],
         declarations: [HomeComponent],
         providers: [
-          { provide: NameListService, useValue: new MockNameListService() }
+          { provide: HomeService, useValue: new MockHomeService() }
         ]
       });
 
     });
 
-    it('should work',
+    it('should be able to read topics from data.json, enter username, enter new topic',
       async(() => {
         TestBed
           .compileComponents()
@@ -32,39 +32,165 @@ export function main() {
             let fixture = TestBed.createComponent(HomeComponent);
             let homeInstance = fixture.debugElement.componentInstance;
             let homeDOMEl = fixture.debugElement.nativeElement;
-            let mockNameListService =
-              fixture.debugElement.injector.get<any>(NameListService) as MockNameListService;
-            let nameListServiceSpy = spyOn(mockNameListService, 'get').and.callThrough();
+            let mockHomeService =
+              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+            let homeServiceSpy = spyOn(mockHomeService, 'get').and.callThrough();
 
-            mockNameListService.returnValue = ['1', '2', '3'];
-
-            fixture.detectChanges();
-
-            expect(homeInstance.nameListService).toEqual(jasmine.any(MockNameListService));
-            expect(homeDOMEl.querySelectorAll('li').length).toEqual(3);
-            expect(nameListServiceSpy.calls.count()).toBe(1);
-
-            homeInstance.newName = 'Minko';
-            homeInstance.addName();
+            mockHomeService.topics = [
+              {name: "Animals", votes: 50, user: "duck_duck"},
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 40, user: "duck_duck"}
+            ];
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li').length).toEqual(4);
-            expect(homeDOMEl.querySelectorAll('li')[3].textContent).toEqual('Minko');
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+            expect(homeDOMEl.querySelectorAll('li').length).toEqual(6);
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('h5')[1].textContent).toEqual('Logged in as: MapleSyrup');
+
+            homeInstance.newTopic = 'Pancakes and Honey';
+            homeInstance.enterNewTopic();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li').length).toEqual(9);
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toEqual('Topic Accepted');
+
+            // has comparison issues due to HTML formatting, so add a trim()
+            expect(homeDOMEl.querySelectorAll('li')[4].textContent.trim()).toEqual('4. Topic: Pancakes and Honey, Votes: 0, Submitted by: MapleSyrup');
+
+          });
+
+      }));
+
+    it('should be able to up vote, resort top 20',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+            let mockHomeService =
+              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            mockHomeService.topics = [
+              {name: "Animals", votes: 50, user: "duck_duck"},
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 40, user: "duck_duck"}
+            ];
+
+            fixture.detectChanges();
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('h5')[1].textContent).toEqual('Logged in as: MapleSyrup');
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Animals, Votes: 50, Submitted by: duck_duck');
+
+            homeInstance.upVote(mockHomeService.topics[1]); // up vote Capitalism
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Capitalism, Votes: 51, Submitted by: duck_duck');
+          });
+
+      }));
+
+    it('should be able to down vote, resort top 20',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+            let mockHomeService =
+              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            mockHomeService.topics = [
+              {name: "Animals", votes: 50, user: "duck_duck"},
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 40, user: "duck_duck"}
+            ];
+
+            fixture.detectChanges();
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('h5')[1].textContent).toEqual('Logged in as: MapleSyrup');
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Animals, Votes: 50, Submitted by: duck_duck');
+
+            homeInstance.downVote(mockHomeService.topics[0]); // down vote Animals
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Capitalism, Votes: 50, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual('2. Topic: Animals, Votes: 49, Submitted by: duck_duck');
+          });
+
+      }));
+
+    it('should be able to sort by alphabetical order',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+            let mockHomeService =
+              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            mockHomeService.topics = [
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 40, user: "duck_duck"},
+              {name: "Animals", votes: 50, user: "duck_duck"}
+            ];
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[3].textContent.trim()).toEqual('Topic: Animals, Votes: 50, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[4].textContent.trim()).toEqual('Topic: Capitalism, Votes: 50, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[5].textContent.trim()).toEqual('Topic: Guitar, Votes: 40, Submitted by: duck_duck');
           });
 
       }));
   });
 }
 
-class MockNameListService {
+class MockHomeService {
 
-  returnValue: string[];
+  returnValue: object;
+  topics: any[];
 
-  get(): Observable<string[]> {
+  get(): Observable<object> {
     return Observable.create((observer: any) => {
       observer.next(this.returnValue);
       observer.complete();
     });
+  }
+
+  getInitialTopics(): any[] {
+    return this.topics;
   }
 }

@@ -14,6 +14,10 @@
   <button type="submit">Submit</button>
 </form>
 
+<li *ngIf="topicAccepted">Topic Accepted</li>
+
+<li *ngIf="topicRejected">Topic Rejected</li>
+
 <h1>Top 20 Topics</h1>
 <ul>
   <li *ngFor="let topic of getTopTwentyTopics()">

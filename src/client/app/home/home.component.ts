@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
 
   topics: any[] = [];
   newTopic: string;
+  topicAccepted: boolean = false;
+  topicRejected: boolean = false;
 
   private user: string = '';
 
@@ -74,12 +76,30 @@ export class HomeComponent implements OnInit {
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
   enterNewTopic(): boolean {
-    if (!this.newTopic) {
+    this.newTopic = this.newTopic.trim();
+    if (!this.newTopic || this.isDuplicateTopic(this.newTopic)) {
+      this.topicAccepted = false;
+      this.topicRejected = true;
       return false;
     }
+
     let name = this.newTopic;
     let votes = 0;
     this.topics.push({name, votes});
+
+    this.topicAccepted = true;
+    this.topicRejected = false;
+
+    return false;
+  }
+
+  isDuplicateTopic(name: string) {
+    for (let i=0; i<this.topics.length; i++) {
+      if (this.topics[i].name.toLowerCase() === name.toLowerCase()) {
+        return true;
+      }
+    }
+
     return false;
   }
 

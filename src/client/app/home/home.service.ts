@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class HomeService {
 
-  private topics: object[] = [];
+  private topics: any[] = [];
 
   constructor(private http: Http) {
     this.get().subscribe(
@@ -25,7 +25,7 @@ export class HomeService {
     );
   }
 
-  getInitialTopics() {
+  getInitialTopics(): any[] {
     return this.topics;
   }
 

@@ -84,7 +84,8 @@ export class HomeComponent implements OnInit {
 
     let name = this.newTopic.trim();
     let votes = 0;
-    this.topics.push({name, votes});
+    let user = this.user;
+    this.topics.push({name, votes, user});
 
     this.topicAccepted = true;
     this.topicRejected = false;

@@ -25,14 +25,16 @@
 <h3>Top 20 Topics</h3>
 <ul class="collection" style="padding: 0;">
   <li *ngFor="let topic of getTopTwentyTopics(); let i = index" class="collection-item">
-    {{ i+1 }}. Topic: {{ topic.name }}, Votes: {{ topic.votes }}
+    {{ i+1 }}. Topic: {{ topic.name }}, Votes: {{ topic.votes }}, Submitted by: {{ topic.user }}
   </li>
 </ul>
 
 <h3>All Topics</h3>
 <ul class="collection" style="padding: 0;">
   <li *ngFor="let topic of getAllTopics()" class="collection-item" style="display: flex;">
-    <div style="flex: 1;">Topic: {{ topic.name }}, Votes: {{ topic.votes }}</div>
+    <div style="flex: 1;">
+      Topic: {{ topic.name }}, Votes: {{ topic.votes }}, Submitted by: {{ topic.user }}
+    </div>
 
     <div class="secondary-content">
       <button *ngIf="user" class="btn" (click)="upVote(topic)">Up</button>

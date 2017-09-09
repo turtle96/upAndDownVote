@@ -76,14 +76,13 @@ export class HomeComponent implements OnInit {
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
   enterNewTopic(): boolean {
-    this.newTopic = this.newTopic.trim();
     if (!this.newTopic || this.isDuplicateTopic(this.newTopic)) {
       this.topicAccepted = false;
       this.topicRejected = true;
       return false;
     }
 
-    let name = this.newTopic;
+    let name = this.newTopic.trim();
     let votes = 0;
     this.topics.push({name, votes});
 
@@ -94,6 +93,7 @@ export class HomeComponent implements OnInit {
   }
 
   isDuplicateTopic(name: string) {
+    name = name.trim();
     for (let i=0; i<this.topics.length; i++) {
       if (this.topics[i].name.toLowerCase() === name.toLowerCase()) {
         return true;

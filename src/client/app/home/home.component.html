@@ -1,4 +1,6 @@
-<p>Enter user name to add a new topic or vote for a topic.</p>
+<h5>Enter user name to add a new topic or vote for a topic.</h5>
+
+<br>
 
 <form (submit)="enterUsername()">
   <input [(ngModel)]="newName" name="newName" placeholder="Enter name">
@@ -22,8 +24,8 @@
 
 <h3>Top 20 Topics</h3>
 <ul class="collection" style="padding: 0;">
-  <li *ngFor="let topic of getTopTwentyTopics()" class="collection-item">
-    Topic: {{ topic.name }}, Votes: {{ topic.votes }}
+  <li *ngFor="let topic of getTopTwentyTopics(); let i = index" class="collection-item">
+    {{ i+1 }}. Topic: {{ topic.name }}, Votes: {{ topic.votes }}
   </li>
 </ul>
 

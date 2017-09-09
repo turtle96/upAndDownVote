@@ -34,17 +34,25 @@ export class HomeComponent implements OnInit {
     this.topics = this.homeService.getInitialTopics();
   }
 
-  sortTopics(topic1: any, topic2: any) {
+  sortTopicsByVotes(topic1: any, topic2: any) {
     return topic2.votes - topic1.votes;
   }
 
+  sortTopicsByAlphabeticalOrder(topic1: any, topic2: any) {
+    if (topic1.name < topic2.name) {
+      return -1;
+    } else if (topic1.name > topic2.name) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   upVote(topic: any) {
-    console.log(topic);
     topic.votes = topic.votes + 1;
   }
 
   downVote(topic: any) {
-    console.log(topic);
     topic.votes = topic.votes - 1;
   }
 

@@ -9,14 +9,14 @@
 
 <h1>Top 20 Topics</h1>
 <ul>
-  <li *ngFor="let topic of topics.slice(0, 20).sort(sortTopics)">
+  <li *ngFor="let topic of topics.slice(0, 20).sort(sortTopicsByVotes)">
     Topic: {{ topic.name }}, Votes: {{ topic.votes }}
   </li>
 </ul>
 
 <h1>Complete List of Topics</h1>
 <ul>
-  <li *ngFor="let topic of topics">
+  <li *ngFor="let topic of topics.sort(sortTopicsByAlphabeticalOrder)">
     Topic: {{ topic.name }}, Votes: {{ topic.votes }}
     <button *ngIf="user" (click)="upVote(topic)">Up</button>
     <button *ngIf="user" (click)="downVote(topic)">Down</button>

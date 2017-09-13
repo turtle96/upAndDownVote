@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   topicAccepted: boolean = false;
   topicRejected: boolean = false;
 
-  private user: string = '';
+  user: string = '';
 
   /**
    * Creates an instance of the HomeComponent with the injected

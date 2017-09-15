@@ -1,10 +1,10 @@
 var express = require('express');
 var app = express();
 
+process.env.PWD = process.cwd();
+
 console.log(process.env.PWD + '/dist/prod/');
 console.log(__dirname);
-
-process.env.PWD = process.cwd();
 
 app.use(express.static(process.env.PWD + '/dist/prod'));
 

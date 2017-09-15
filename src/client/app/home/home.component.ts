@@ -75,9 +75,9 @@ export class HomeComponent implements OnInit {
    * @returns {number}
    */
   sortTopicsByAlphabeticalOrder(topic1: any, topic2: any): number {
-    if (topic1.name < topic2.name) {
+    if (topic1.name.toLowerCase() < topic2.name.toLowerCase()) {
       return -1;
-    } else if (topic1.name > topic2.name) {
+    } else if (topic1.name.toLowerCase() > topic2.name.toLowerCase()) {
       return 1;
     } else {
       return 0;

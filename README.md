@@ -1,6 +1,6 @@
 # Up And Down Vote
 
-Simple system to submit, upvote and downvote topics.
+Simple system to submit, upvote and downvote topics. App is live [here](https://up-and-down-vote.herokuapp.com/).
 
 ## Functionalities
 - Maintains a list of top 20 topics and their upvotes/downvotes (sorted by upvotes, descending).
@@ -41,6 +41,7 @@ npm run serve.coverage
 - [Materialize](http://materializecss.com/) for Material Design styling.
 - Default topics sourced from [Ted topics](https://www.ted.com/topics).
 - data.json for default topics generated with help of [objgen](http://objgen.com/json).
+- Hosted on [Heroku](https://www.heroku.com/).
 
 ## Written Code (Majority)
 - src/client/app/home/home.component.html

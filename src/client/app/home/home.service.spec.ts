@@ -8,8 +8,6 @@ import {HomeService} from './home.service';
 
 export function main() {
   describe('Home Service', () => {
-    let homeService: HomeService;
-    let mockBackend: MockBackend;
 
     beforeEach(() => {
 
@@ -51,5 +49,27 @@ export function main() {
         });
       });
     }));
+
+    it('should parse topics properly', async(() => {
+
+      let mockBackend = TestBed.get(MockBackend);
+
+      mockBackend.connections.subscribe((c: any) => {
+        c.mockRespond(new Response(new ResponseOptions({ body:
+          `{"Children": "50", "Capitalism": "50", "Animals": "20"}`
+        })));
+      });
+
+      let homeService = TestBed.get(HomeService);
+
+      let expected: object[] = [];
+      let user = "duck_duck";
+      expected.push({name: "Children", votes: 50, user});
+      expected.push({name: "Capitalism", votes: 50, user});
+      expected.push({name: "Animals", votes: 20, user});
+
+      expect(homeService.getInitialTopics()).toEqual(expected);
+    }));
+
   });
 }

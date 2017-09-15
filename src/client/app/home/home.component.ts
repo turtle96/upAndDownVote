@@ -12,14 +12,14 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
 
-  newName: string = '';
+  private newName: string = '';
 
-  topics: any[] = [];
-  newTopic: string;
-  topicAccepted: boolean = false;
-  topicRejected: boolean = false;
+  private topics: any[] = [];
+  private newTopic: string;
+  private topicAccepted: boolean = false;
+  private topicRejected: boolean = false;
 
-  user: string = '';
+  private user: string = '';
 
   /**
    * Creates an instance of the HomeComponent with the injected

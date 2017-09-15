@@ -12,14 +12,14 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
 
-  newName: string = '';
+  private newName: string = '';
 
-  topics: any[] = [];
-  newTopic: string;
-  topicAccepted: boolean = false;
-  topicRejected: boolean = false;
+  private topics: any[] = [];
+  private newTopic: string;
+  private topicAccepted: boolean = false;
+  private topicRejected: boolean = false;
 
-  user: string = '';
+  private user: string = '';
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -75,9 +75,9 @@ export class HomeComponent implements OnInit {
    * @returns {number}
    */
   sortTopicsByAlphabeticalOrder(topic1: any, topic2: any): number {
-    if (topic1.name < topic2.name) {
+    if (topic1.name.toLowerCase() < topic2.name.toLowerCase()) {
       return -1;
-    } else if (topic1.name > topic2.name) {
+    } else if (topic1.name.toLowerCase() > topic2.name.toLowerCase()) {
       return 1;
     } else {
       return 0;

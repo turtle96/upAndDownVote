@@ -11,9 +11,11 @@ Simple system to submit, upvote and downvote topics.
 
 ## Guide
 - Enter username. No login required.
+> Username is required to be able to submit and vote on topics.
 - Enter a new topic to submit (topic should be viewable under <b>All Topics</b>).
-- Scroll down to <b>All Topics</b> to vote by clicking on <b>Up</b> or <b>Down</b> button.
 > Topic name will be rejected if it is a duplicate of one already in <b>All Topics</b>.
+- Scroll down to <b>All Topics</b> to vote by clicking on <b>Up</b> or <b>Down</b> button.
+- Check <b>Top 20 Topics</b> to see if any new topics made the list.
 
 ## Setup 
 - Ensure you have node and npm installed.
@@ -23,14 +25,20 @@ npm install
 npm start
 ```
 - Browser should open to app.
+
+## Testing
 - To test, run:
 ```
 npm test
 ```
+- To view code coverage (auto-generated at the end of `npm test`):
+```
+npm run serve.coverage
+```
 
 ## Acknowledgements
-- [mgechev/angular-seed](https://github.com/mgechev/angular-seed) for quick start seed Angular project.
-- [Materialize](http://materializecss.com/) for quick Material Design styling.
+- [mgechev/angular-seed](https://github.com/mgechev/angular-seed) for Angular seed project.
+- [Materialize](http://materializecss.com/) for Material Design styling.
 - Default topics sourced from [Ted topics](https://www.ted.com/topics).
 - data.json for default topics generated with help of [objgen](http://objgen.com/json).
 

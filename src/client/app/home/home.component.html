@@ -2,15 +2,17 @@
 
 <br>
 
-<form (submit)="enterUsername()">
-  <input [(ngModel)]="newName" name="newName" placeholder="Enter name">
-  <button class="btn" type="submit">Submit</button>
+<form (submit)="enterUsername()" class="input-field">
+  <input [(ngModel)]="newName" name="newName" id="inputUsername" type="text">
+  <label for="inputUsername">Enter name</label>
+  <button class="btn pull-right" type="submit">Submit</button>
 </form>
 
-<h5 *ngIf="user">Logged in as: {{ user }}</h5>
+<h5 *ngIf="user" style="margin-top: 30px;">Logged in as: {{ user }}</h5>
 
-<form *ngIf="user" (submit)="enterNewTopic()">
-  <input [(ngModel)]="newTopic" name="newTopic" placeholder="Add new topic">
+<form *ngIf="user" (submit)="enterNewTopic()" class="input-field" style="margin-top: 30px;">
+  <input [(ngModel)]="newTopic" name="newTopic" id="inputTopic" type="text">
+  <label for="inputTopic">Add new topic</label>
   <button class="btn" type="submit">Submit</button>
 </form>
 

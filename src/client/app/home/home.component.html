@@ -19,7 +19,16 @@
 </ul>
 
 <ul *ngIf="topicRejected" class="collection red">
-  <li class="collection-item">Topic Rejected (Please ensure field is not empty, and not a duplicate topic)</li>
+  <li class="collection-item">
+
+    Topic Rejected. Please ensure topic is: <br>
+    <ul style="display: list-item; margin-left: 10px;">
+      <li style="list-style-type: disc;">Not empty</li>
+      <li style="list-style-type: disc;">Not a duplicate topic</li>
+      <li style="list-style-type: disc;">Not longer than 255 characters</li>
+    </ul>
+
+  </li>
 </ul>
 
 <h3>Top 20 Topics</h3>

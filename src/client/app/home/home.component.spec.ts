@@ -250,7 +250,7 @@ export function main() {
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toMatch('Topic Rejected.');
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toMatch('Topic Rejected');
 
           });
 
@@ -286,6 +286,32 @@ export function main() {
 
             // exactly 256 characters
             homeInstance.newTopic = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,A';
+            homeInstance.enterNewTopic();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toMatch('Topic Rejected');
+
+          });
+
+      }));
+
+    it('should reject a submitted topic which is a duplicate of existing topics (ignore case)',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            homeInstance.newTopic = 'a chicken';
+            homeInstance.enterNewTopic();
+
+            homeInstance.newTopic = 'A CHICKEN';
             homeInstance.enterNewTopic();
 
             fixture.detectChanges();

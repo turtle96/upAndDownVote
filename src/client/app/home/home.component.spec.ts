@@ -232,6 +232,66 @@ export function main() {
           });
 
       }));
+
+    it('should reject a submitted topic with empty string',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            homeInstance.newTopic = '';
+            homeInstance.enterNewTopic();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toMatch('Topic Rejected.');
+
+          });
+
+      }));
+
+    it('should reject a submitted topic longer than 255 char (with trailing whitespaces removed)',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            // exactly 255 characters
+            homeInstance.newTopic = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,';
+            homeInstance.enterNewTopic();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toEqual('Topic Accepted');
+
+            // exactly 255 characters with trailing whitespaces
+            homeInstance.newTopic = '         Aorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,        ';
+            homeInstance.enterNewTopic();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toEqual('Topic Accepted');
+
+            // exactly 256 characters
+            homeInstance.newTopic = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,A';
+            homeInstance.enterNewTopic();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toMatch('Topic Rejected');
+
           });
 
       }));

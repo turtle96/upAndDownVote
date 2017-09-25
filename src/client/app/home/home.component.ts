@@ -139,6 +139,7 @@ export class HomeComponent implements OnInit {
 
   /**
    * Checks if given name is in topics list.
+   * Case is ignored, meaning 'a little chicken' and 'A LITTLE CHICKEN' will be considered the same.
    * @param name - topic name
    * @return {boolean} true if name is in topics list, else false
    */

@@ -223,6 +223,11 @@ export function main() {
 
             fixture.detectChanges();
 
+            // If all votes are the same, top 20 should show alphabetical order
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTop20Topics(1, 'Animals', 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTop20Topics(2, 'Capitalism', 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual(getFormattedStringForTop20Topics(3, 'Guitar', 50, DEFAULT_AUTHOR_NAME));
 
           });
 

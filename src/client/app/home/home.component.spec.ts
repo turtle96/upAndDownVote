@@ -24,7 +24,61 @@ export function main() {
 
     });
 
-    it('should be able to read topics from data.json, enter username, enter new topic',
+    it('should be able to read topics from homeService and display',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+            let mockHomeService = fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+
+            mockHomeService.topics = [
+              {name: "Animals", votes: 50, user: "duck_duck"},
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 40, user: "duck_duck"}
+            ];
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li').length).toEqual(6);
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Animals, Votes: 50, Submitted by: duck_duck');
+
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual('2. Topic: Capitalism, Votes: 50, Submitted by: duck_duck');
+
+            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual('3. Topic: Guitar, Votes: 40, Submitted by: duck_duck');
+
+          });
+
+      }));
+
+    it('should be able to enter username',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('h5')[1].textContent).toEqual('Logged in as: MapleSyrup');
+
+          });
+
+      }));
+
+    it('should be able to enter new topic',
       async(() => {
         TestBed
           .compileComponents()
@@ -138,7 +192,7 @@ export function main() {
 
       }));
 
-    it('should be able to sort by alphabetical order',
+    it('should be able to sort topics by alphabetical order',
       async(() => {
         TestBed
           .compileComponents()
@@ -168,7 +222,7 @@ export function main() {
 class MockHomeService {
 
   returnValue: object;
-  topics: any[];
+  topics: any[] = [];
 
   get(): Observable<object> {
     return Observable.create((observer: any) => {

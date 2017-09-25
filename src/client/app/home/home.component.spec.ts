@@ -118,7 +118,7 @@ export function main() {
             expect(homeDOMEl.querySelectorAll('li')[0].textContent).toEqual('Topic Accepted');
 
             // has comparison issues due to HTML formatting, so add a trim()
-            expect(homeDOMEl.querySelectorAll('li')[4].textContent.trim()).toEqual('4. Topic: Pancakes and Honey, Votes: 0, Submitted by: MapleSyrup');
+            expect(homeDOMEl.querySelectorAll('li')[4].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(4, 'Pancakes and Honey', 0, 'MapleSyrup'));
 
           });
 
@@ -147,13 +147,14 @@ export function main() {
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Animals, Votes: 50, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Animals', 50, DEFAULT_AUTHOR_NAME));
 
             homeInstance.upVote(mockHomeService.topics[1]); // up vote Capitalism
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Capitalism, Votes: 51, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Capitalism', 51, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(2, 'Animals', 50, DEFAULT_AUTHOR_NAME));
           });
 
       }));
@@ -182,14 +183,14 @@ export function main() {
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Animals, Votes: 50, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Animals', 50, DEFAULT_AUTHOR_NAME));
 
             homeInstance.downVote(mockHomeService.topics[0]); // down vote Animals
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Capitalism, Votes: 50, Submitted by: duck_duck');
-            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual('2. Topic: Animals, Votes: 49, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Capitalism', 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(2, 'Animals', 49, DEFAULT_AUTHOR_NAME));
           });
 
       }));

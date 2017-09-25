@@ -9,6 +9,8 @@ import { Observable } from 'rxjs/Observable';
 import { HomeComponent } from './home.component';
 import { HomeService } from './home.service';
 
+private static let DEFAULT_AUTHOR_NAME = "duck_duck";
+
 export function main() {
   describe('Home component', () => {
 
@@ -24,7 +26,7 @@ export function main() {
 
     });
 
-    it('should be able to read topics from homeService and display',
+    it('should be able to read topics from homeService and display correctly',
       async(() => {
         TestBed
           .compileComponents()
@@ -37,20 +39,20 @@ export function main() {
             expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
 
             mockHomeService.topics = [
+              {name: "Guitar", votes: 40, user: "duck_duck"},
               {name: "Animals", votes: 50, user: "duck_duck"},
-              {name: "Capitalism", votes: 50, user: "duck_duck"},
-              {name: "Guitar", votes: 40, user: "duck_duck"}
+              {name: "Capitalism", votes: 100, user: "duck_duck"}
             ];
 
             fixture.detectChanges();
 
             expect(homeDOMEl.querySelectorAll('li').length).toEqual(6);
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Animals, Votes: 50, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, "Capitalism", 100, DEFAULT_AUTHOR_NAME));
 
-            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual('2. Topic: Capitalism, Votes: 50, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(2, "Animals", 50, DEFAULT_AUTHOR_NAME));
 
-            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual('3. Topic: Guitar, Votes: 40, Submitted by: duck_duck');
+            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(3, "Guitar", 40, DEFAULT_AUTHOR_NAME));
 
           });
 
@@ -217,6 +219,11 @@ export function main() {
 
       }));
   });
+
+}
+
+private function getFormattedStringForTopicDisplay(listNum: number, topic: string, votes: number, author: string): string {
+  return `${listNum}. Topic: ${topic}, Votes: ${votes}, Submitted by: ${author}`;
 }
 
 class MockHomeService {

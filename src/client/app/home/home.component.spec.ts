@@ -48,11 +48,21 @@ export function main() {
 
             expect(homeDOMEl.querySelectorAll('li').length).toEqual(6);
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Capitalism', 100, DEFAULT_AUTHOR_NAME));
+            // List top twenty by votes
 
-            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(2, 'Animals', 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTop20Topics(1, 'Capitalism', 100, DEFAULT_AUTHOR_NAME));
 
-            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(3, 'Guitar', 40, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTop20Topics(2, 'Animals', 50, DEFAULT_AUTHOR_NAME));
+
+            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual(getFormattedStringForTop20Topics(3, 'Guitar', 40, DEFAULT_AUTHOR_NAME));
+
+            // List All Topics by alphabetical order
+
+            expect(homeDOMEl.querySelectorAll('li')[3].textContent.trim()).toEqual(getFormattedStringForAllTopics('Animals', 50, DEFAULT_AUTHOR_NAME));
+
+            expect(homeDOMEl.querySelectorAll('li')[4].textContent.trim()).toEqual(getFormattedStringForAllTopics('Capitalism', 100, DEFAULT_AUTHOR_NAME));
+
+            expect(homeDOMEl.querySelectorAll('li')[5].textContent.trim()).toEqual(getFormattedStringForAllTopics('Guitar', 40, DEFAULT_AUTHOR_NAME));
 
           });
 
@@ -118,7 +128,7 @@ export function main() {
             expect(homeDOMEl.querySelectorAll('li')[0].textContent).toEqual('Topic Accepted');
 
             // has comparison issues due to HTML formatting, so add a trim()
-            expect(homeDOMEl.querySelectorAll('li')[4].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(4, 'Pancakes and Honey', 0, 'MapleSyrup'));
+            expect(homeDOMEl.querySelectorAll('li')[4].textContent.trim()).toEqual(getFormattedStringForTop20Topics(4, 'Pancakes and Honey', 0, 'MapleSyrup'));
 
           });
 
@@ -147,14 +157,14 @@ export function main() {
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Animals', 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTop20Topics(1, 'Animals', 50, DEFAULT_AUTHOR_NAME));
 
             homeInstance.upVote(mockHomeService.topics[1]); // up vote Capitalism
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Capitalism', 51, DEFAULT_AUTHOR_NAME));
-            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(2, 'Animals', 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTop20Topics(1, 'Capitalism', 51, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTop20Topics(2, 'Animals', 50, DEFAULT_AUTHOR_NAME));
           });
 
       }));
@@ -183,19 +193,19 @@ export function main() {
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Animals', 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTop20Topics(1, 'Animals', 50, DEFAULT_AUTHOR_NAME));
 
             homeInstance.downVote(mockHomeService.topics[0]); // down vote Animals
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Capitalism', 50, DEFAULT_AUTHOR_NAME));
-            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(2, 'Animals', 49, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTop20Topics(1, 'Capitalism', 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTop20Topics(2, 'Animals', 49, DEFAULT_AUTHOR_NAME));
           });
 
       }));
 
-    it('should be able to sort topics by alphabetical order',
+    it('should be able to sort topics by alphabetical order, then votes',
       async(() => {
         TestBed
           .compileComponents()
@@ -207,15 +217,16 @@ export function main() {
 
             mockHomeService.topics = [
               {name: "Capitalism", votes: 50, user: "duck_duck"},
-              {name: "Guitar", votes: 40, user: "duck_duck"},
+              {name: "Guitar", votes: 50, user: "duck_duck"},
               {name: "Animals", votes: 50, user: "duck_duck"}
             ];
 
             fixture.detectChanges();
 
-            expect(homeDOMEl.querySelectorAll('li')[3].textContent.trim()).toEqual('Topic: Animals, Votes: 50, Submitted by: duck_duck');
-            expect(homeDOMEl.querySelectorAll('li')[4].textContent.trim()).toEqual('Topic: Capitalism, Votes: 50, Submitted by: duck_duck');
-            expect(homeDOMEl.querySelectorAll('li')[5].textContent.trim()).toEqual('Topic: Guitar, Votes: 40, Submitted by: duck_duck');
+
+          });
+
+      }));
           });
 
       }));
@@ -223,7 +234,11 @@ export function main() {
 
 }
 
-private function getFormattedStringForTopicDisplay(listNum: number, topic: string, votes: number, author: string): string {
+private function getFormattedStringForAllTopics(topic: string, votes: number, author: string): string {
+  return `Topic: ${topic}, Votes: ${votes}, Submitted by: ${author}`;
+}
+
+private function getFormattedStringForTop20Topics(listNum: number, topic: string, votes: number, author: string): string {
   return `${listNum}. Topic: ${topic}, Votes: ${votes}, Submitted by: ${author}`;
 }
 

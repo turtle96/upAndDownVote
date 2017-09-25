@@ -32,9 +32,9 @@ export function main() {
             let fixture = TestBed.createComponent(HomeComponent);
             let homeInstance = fixture.debugElement.componentInstance;
             let homeDOMEl = fixture.debugElement.nativeElement;
-            let mockHomeService =
-              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
-            let homeServiceSpy = spyOn(mockHomeService, 'get').and.callThrough();
+            let mockHomeService = fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
 
             mockHomeService.topics = [
               {name: "Animals", votes: 50, user: "duck_duck"},
@@ -44,7 +44,6 @@ export function main() {
 
             fixture.detectChanges();
 
-            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
             expect(homeDOMEl.querySelectorAll('li').length).toEqual(6);
 
             homeInstance.newName = 'MapleSyrup';
@@ -77,8 +76,9 @@ export function main() {
             let fixture = TestBed.createComponent(HomeComponent);
             let homeInstance = fixture.debugElement.componentInstance;
             let homeDOMEl = fixture.debugElement.nativeElement;
-            let mockHomeService =
-              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+            let mockHomeService = fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
 
             mockHomeService.topics = [
               {name: "Animals", votes: 50, user: "duck_duck"},
@@ -86,16 +86,10 @@ export function main() {
               {name: "Guitar", votes: 40, user: "duck_duck"}
             ];
 
-            fixture.detectChanges();
-
-            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
-
             homeInstance.newName = 'MapleSyrup';
             homeInstance.enterUsername();
 
             fixture.detectChanges();
-
-            expect(homeDOMEl.querySelectorAll('h5')[1].textContent).toEqual('Logged in as: MapleSyrup');
 
             expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Animals, Votes: 50, Submitted by: duck_duck');
 
@@ -119,22 +113,18 @@ export function main() {
             let mockHomeService =
               fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
 
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+
             mockHomeService.topics = [
               {name: "Animals", votes: 50, user: "duck_duck"},
               {name: "Capitalism", votes: 50, user: "duck_duck"},
               {name: "Guitar", votes: 40, user: "duck_duck"}
             ];
 
-            fixture.detectChanges();
-
-            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
-
             homeInstance.newName = 'MapleSyrup';
             homeInstance.enterUsername();
 
             fixture.detectChanges();
-
-            expect(homeDOMEl.querySelectorAll('h5')[1].textContent).toEqual('Logged in as: MapleSyrup');
 
             expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual('1. Topic: Animals, Votes: 50, Submitted by: duck_duck');
 
@@ -154,7 +144,6 @@ export function main() {
           .compileComponents()
           .then(() => {
             let fixture = TestBed.createComponent(HomeComponent);
-            let homeInstance = fixture.debugElement.componentInstance;
             let homeDOMEl = fixture.debugElement.nativeElement;
             let mockHomeService =
               fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
@@ -164,8 +153,6 @@ export function main() {
               {name: "Guitar", votes: 40, user: "duck_duck"},
               {name: "Animals", votes: 50, user: "duck_duck"}
             ];
-
-            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
 
             fixture.detectChanges();
 

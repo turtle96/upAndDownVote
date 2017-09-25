@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { HomeComponent } from './home.component';
 import { HomeService } from './home.service';
 
-private static let DEFAULT_AUTHOR_NAME = "duck_duck";
+private static let DEFAULT_AUTHOR_NAME = 'duck_duck';
 
 export function main() {
   describe('Home component', () => {
@@ -48,11 +48,11 @@ export function main() {
 
             expect(homeDOMEl.querySelectorAll('li').length).toEqual(6);
 
-            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, "Capitalism", 100, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(1, 'Capitalism', 100, DEFAULT_AUTHOR_NAME));
 
-            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(2, "Animals", 50, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(2, 'Animals', 50, DEFAULT_AUTHOR_NAME));
 
-            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(3, "Guitar", 40, DEFAULT_AUTHOR_NAME));
+            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual(getFormattedStringForTopicDisplay(3, 'Guitar', 40, DEFAULT_AUTHOR_NAME));
 
           });
 

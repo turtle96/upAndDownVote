@@ -285,6 +285,90 @@ export function main() {
 
       }));
 
+    it('should be able to up and down vote, resort top 20 accordingly',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+            let mockHomeService =
+              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+
+            mockHomeService.topics = [
+              {name: "Animals", votes: 47, user: "duck_duck"},
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 45, user: "duck_duck"}
+            ];
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTop20Topics(2, 'Animals', 47, DEFAULT_AUTHOR_NAME));
+
+            homeInstance.upVote(mockHomeService.topics[0]); // up vote Animals
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[1].textContent.trim()).toEqual(getFormattedStringForTop20Topics(2, 'Animals', 48, DEFAULT_AUTHOR_NAME));
+
+            homeInstance.upVote(mockHomeService.topics[0]);
+            homeInstance.upVote(mockHomeService.topics[0]);
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent.trim()).toEqual(getFormattedStringForTop20Topics(1, 'Animals', 50, DEFAULT_AUTHOR_NAME));
+
+            homeInstance.downVote(mockHomeService.topics[0]);
+            homeInstance.downVote(mockHomeService.topics[0]);
+            homeInstance.downVote(mockHomeService.topics[0]);
+            homeInstance.downVote(mockHomeService.topics[0]);
+            homeInstance.downVote(mockHomeService.topics[0]);
+            homeInstance.downVote(mockHomeService.topics[0]);
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[2].textContent.trim()).toEqual(getFormattedStringForTop20Topics(3, 'Animals', 44, DEFAULT_AUTHOR_NAME));
+
+          });
+
+      }));
+
+    it('getAllTopics() should return topics sorted in alphabetical order',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let mockHomeService =
+              fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            mockHomeService.topics = [
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 50, user: "duck_duck"},
+              {name: "Animals", votes: 50, user: "duck_duck"}
+            ];
+
+            let expected = [
+              {name: "Animals", votes: 50, user: "duck_duck"},
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 50, user: "duck_duck"}
+            ];
+
+            fixture.detectChanges();
+
+            expect(homeInstance.getAllTopics()).toEqual(expected);
+
+          });
+
+      }));
+
     it('should be able to sort topics by alphabetical order, then votes',
       async(() => {
         TestBed

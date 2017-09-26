@@ -77,14 +77,94 @@ export function main() {
             let homeInstance = fixture.debugElement.componentInstance;
             let homeDOMEl = fixture.debugElement.nativeElement;
 
-            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
-
             homeInstance.newName = 'MapleSyrup';
             homeInstance.enterUsername();
 
             fixture.detectChanges();
 
             expect(homeDOMEl.querySelectorAll('h5')[1].textContent).toEqual('Logged in as: MapleSyrup');
+
+          });
+
+      }));
+
+    it('should reject invalid username',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+
+            expect(homeDOMEl.querySelectorAll('h5').length).toEqual(1);
+            expect(homeDOMEl.querySelectorAll('form').length).toEqual(1);
+
+            homeInstance.newName = '';
+            homeInstance.enterUsername();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('h5').length).toEqual(1);
+            expect(homeDOMEl.querySelectorAll('form').length).toEqual(1);
+
+          });
+
+      }));
+
+    it('should be able to show "Add New Topic" field only after valid username is entered',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+
+            expect(homeDOMEl.querySelectorAll('form').length).toEqual(1);
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('form').length).toEqual(2);
+
+            expect(homeDOMEl.querySelectorAll('form')[1].querySelector('label').textContent).toEqual('Add new topic');
+
+          });
+
+      }));
+
+    it('should be able to show vote buttons only after valid username is entered',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+            let mockHomeService = fixture.debugElement.injector.get<any>(HomeService) as MockHomeService;
+
+            expect(homeInstance.homeService).toEqual(jasmine.any(MockHomeService));
+
+            mockHomeService.topics = [
+              {name: "Animals", votes: 50, user: "duck_duck"},
+              {name: "Capitalism", votes: 50, user: "duck_duck"},
+              {name: "Guitar", votes: 40, user: "duck_duck"}
+            ];
+
+            expect(homeDOMEl.querySelectorAll('button').length).toEqual(1);
+
+            homeInstance.newName = 'MapleSyrup';
+            homeInstance.enterUsername();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('button').length).toEqual(8);
+
+            expect(homeDOMEl.querySelectorAll('button')[2].textContent).toEqual('Up');
+            expect(homeDOMEl.querySelectorAll('button')[3].textContent).toEqual('Down');
 
           });
 

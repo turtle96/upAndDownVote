@@ -398,6 +398,20 @@ export function main() {
 
             expect(homeDOMEl.querySelectorAll('li')[0].textContent).toMatch('Topic Rejected');
 
+            homeInstance.newTopic = 'halloween';
+            homeInstance.enterNewTopic();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toEqual('Topic Accepted');
+
+            homeInstance.newTopic = '          halloween       ';
+            homeInstance.enterNewTopic();
+
+            fixture.detectChanges();
+
+            expect(homeDOMEl.querySelectorAll('li')[0].textContent).toMatch('Topic Rejected');
+
           });
 
       }));

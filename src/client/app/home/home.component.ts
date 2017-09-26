@@ -12,6 +12,7 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
 
+  private static MAX_TOPIC_LENGTH: number = 255;
   private newName: string = '';
 
   private topics: any[] = [];
@@ -106,7 +107,7 @@ export class HomeComponent implements OnInit {
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
   enterNewTopic(): boolean {
-    if (!this.newTopic || this.isDuplicateTopic(this.newTopic)) {
+    if (this.isTopicRejected()) {
       this.topicAccepted = false;
       this.topicRejected = true;
       return false;
@@ -124,7 +125,21 @@ export class HomeComponent implements OnInit {
   }
 
   /**
+   * Will reject user's topic if:
+   * - string is empty
+   * - string is more than 255 characters long (after trimming trailing whitespaces)
+   * - topic name is already in current topics list
+   * @returns {boolean}
+   */
+  private isTopicRejected() {
+    return !this.newTopic ||
+      this.newTopic.trim().length > HomeComponent.MAX_TOPIC_LENGTH ||
+      this.isDuplicateTopic(this.newTopic);
+  }
+
+  /**
    * Checks if given name is in topics list.
+   * Case is ignored, meaning 'a little chicken' and 'A LITTLE CHICKEN' will be considered the same.
    * @param name - topic name
    * @return {boolean} true if name is in topics list, else false
    */

@@ -1,12 +1,12 @@
 {
   "static": {
     "urls": {
-      "/index.html": "af7a09f49c5d215e3399317714449ea2f3385f7a",
+      "/index.html": "011c0b9e349bb791a2bb24ebb6e523e61badcbc2",
       "/worker-basic.min.js": "2f12848c352bd6baf25f0f1d995351696ef518ff",
-      "/js\\app.js": "21e938c86504f290440e76f01081daef0c7f9ec1",
-      "/js\\shims.js": "2300d63206677832b4678905fa99e5ce6af852c4",
       "/assets\\data.json": "fd692000e0c56a944183261034e60a11796cbfad",
       "/css\\main.css": "91f0a66a0491c64a55fffa3b9ee97298cdd7ae8e",
+      "/js\\app.js": "5902db72e88578af1f2043b3b723b10962f110c4",
+      "/js\\shims.js": "2300d63206677832b4678905fa99e5ce6af852c4",
       "/assets\\favicon\\favicon-PROD.ico": "5d40a29d26398292f08a46b26f6788ec60f5f43e",
       "/assets\\favicon\\favicon-DEV.ico": "aa4fb0706ed367fb5c2fd6bd2b058c0dce8cc785",
       "/assets\\svg\\more.svg": "f0ebcdcc3d9f8f58ef7be95a3498229ec55e8eb6"
